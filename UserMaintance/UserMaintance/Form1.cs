@@ -13,6 +13,7 @@ namespace UserMaintance
             label1.Text = Resource1.FullName; // label1
             button1.Text = Resource1.Add; // button1
             button2.Text = Resource1.Write;
+            button3.Text = Resource1.Delete;
 
             listBox1.DataSource = users;
             listBox1.ValueMember = "ID";
@@ -50,6 +51,32 @@ namespace UserMaintance
                     sw.Write(s.FullName);
                     sw.WriteLine();
                 }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex != -1)
+            {
+                // Kiválasztott elem indexének lekérése
+                int selectedIndex = listBox1.SelectedIndex;
+
+                // Az elem törlése a users listából
+                if (selectedIndex < users.Count)
+                {
+                    users.RemoveAt(selectedIndex);
+
+                    // ListBox frissítése az adatváltozások tükrözésére
+                    listBox1.DataSource = null; // Elõször töröld a DataSource-t
+                    listBox1.DataSource = users; // Állítsd be újra a users listát adatforrásként
+                    listBox1.DisplayMember = "FullName";
+
+                    MessageBox.Show("Elem sikeresen törölve.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nincs kiválasztott elem.");
             }
         }
     }
