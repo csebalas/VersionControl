@@ -1,4 +1,5 @@
-﻿using MNB.MnbServiceReference;
+﻿using MNB.Entities;
+using MNB.MnbServiceReference;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,10 +14,12 @@ namespace MNB
 {
     public partial class Form1 : Form
     {
+        public BindingList<RateData> rates = new BindingList<RateData>();
         public Form1()
         {
             InitializeComponent();
             CallWebService();
+            dataGridView1.DataSource = rates;
         }
 
         private void CallWebService()
@@ -35,7 +38,7 @@ namespace MNB
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            List<string> list = new List<string>();
         }
     }
 }
