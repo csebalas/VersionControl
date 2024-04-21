@@ -35,7 +35,7 @@ namespace MNB
             Chart();
         }
 
-        public void CallWebService()
+    public void CallWebService()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
             var request = new GetExchangeRatesRequestBody()
