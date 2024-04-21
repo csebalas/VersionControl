@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml;
 
 namespace MNB
@@ -24,6 +25,7 @@ namespace MNB
             CallWebService();
             dataGridView1.DataSource = rates;
             Xmlupgrade();
+            Chart();
         }
 
         public void CallWebService()
@@ -67,6 +69,25 @@ namespace MNB
                 if (unit != 0)
                     rate.Value = value / unit;
             }
+        }
+
+        public void Chart()
+        {
+            chartRateData.DataSource = rates;
+
+            var series = chartRateData.Series[0];
+            series.ChartType = SeriesChartType.Line;
+            series.XValueMember = "Date";
+            series.YValueMembers = "Value";
+            series.BorderWidth = 2;
+
+            var legend = chartRateData.Legends[0];
+            legend.Enabled = false;
+
+            var chartArea = chartRateData.ChartAreas[0];
+            chartArea.AxisX.MajorGrid.Enabled = false;
+            chartArea.AxisY.MajorGrid.Enabled = false;
+            chartArea.AxisY.IsStartedFromZero = false;
         }
 
         public void Form1_Load(object sender, EventArgs e)
