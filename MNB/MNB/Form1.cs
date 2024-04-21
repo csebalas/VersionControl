@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,6 +23,12 @@ namespace MNB
         public Form1()
         {
             InitializeComponent();
+            RefreshData();
+        }
+
+        private void RefreshData()
+        {
+            rates.Clear();
             CallWebService();
             dataGridView1.DataSource = rates;
             Xmlupgrade();
@@ -33,9 +40,9 @@ namespace MNB
             var mnbService = new MNBArfolyamServiceSoapClient();
             var request = new GetExchangeRatesRequestBody()
             {
-                currencyNames = "EUR",
-                startDate = "2020-01-01",
-                endDate = "2020-06-30"
+                currencyNames = comboBox1.SelectedItem.ToString(),
+                startDate = dateTimePicker1.Value.ToString(),
+                endDate = dateTimePicker2.Value.ToString()
             };
             var response = mnbService.GetExchangeRates(request);
             this.result = response.GetExchangeRatesResult;
@@ -93,6 +100,21 @@ namespace MNB
         public void Form1_Load(object sender, EventArgs e)
         {
             List<RateData> list = new List<RateData>();
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshData();
         }
     }
 }
